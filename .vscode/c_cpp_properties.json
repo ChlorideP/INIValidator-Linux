@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/src/**",
+                "/usr/include/python3.13/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "_CONSOLE"
+            ],
+            "compilerPath": "/usr/bin/clang++",
+            "intelliSenseMode": "linux-clang-x64",
+            "cStandard": "c23",
+            "cppStandard": "c++23"
+        }
+    ],
+    "version": 4
+}

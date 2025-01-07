@@ -10,7 +10,12 @@
 #include <locale>
 #include <regex>
 #include <sstream>
+
+#ifdef _WIN32
 #include <Windows.h>
+#else
+#include <iconv.h>  // at least for unix encoding conversion.
+#endif
 
 std::vector<std::string> IniFile::FileNames;
 size_t IniFile::FileIndex = ULLONG_MAX;
@@ -69,6 +74,9 @@ void IniFile::load(const std::string& filepath, bool isInclude) {
 	std::string name = "[" + std::to_string(FileIndex) + "] " + fileName + " ";
 	Progress::start(name, totalLines);
 
+	int lineNumber = 0;
+
+#ifdef _WIN32
 	auto fromWString = [](const std::wstring& wstr) {
 		// Get required buffer size for conversion
 		int sizeNeeded = WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);
@@ -77,8 +85,33 @@ void IniFile::load(const std::string& filepath, bool isInclude) {
 
 		return result;
 	};
+#else
+	auto fromWString = [](const std::wstring& wstr) {
+		iconv_t cd = iconv_open("UTF-8", "WCHAR_T");
+		if (cd == (iconv_t)-1) {
+			Log::out("Failed to open iconv");
+			return std::string();
+		}
 
-	int lineNumber = 0;
+		std::string result;
+		result.resize(wstr.size() * 4); // 一个字符最多4个字节
+		char* inbuf = const_cast<char*>(reinterpret_cast<const char*>(wstr.c_str()));
+		char* outbuf = &result[0];
+		size_t inbytesleft = wstr.size() * sizeof(wchar_t);
+		size_t outbytesleft = result.size();
+		size_t ret = iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+		iconv_close(cd);
+
+		if (ret == (size_t)-1) {
+			Log::out("Failed to convert encoding");
+			return std::string();
+		}
+
+		result.resize(result.size() - outbytesleft);
+		return result;
+	};
+#endif
+
 	std::wstring wline;
 	// 逐行扫描加载ini
 	while (std::getline(file, wline)) {
@@ -95,6 +128,7 @@ void IniFile::load(const std::string& filepath, bool isInclude) {
 			readKeyValue(currentSection, line, origin, lineNumber);
 		Progress::update();
 	}
+	
 	Progress::stop();
 	processIncludes(std::filesystem::path(path).parent_path().string());
 }

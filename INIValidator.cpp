@@ -7,7 +7,10 @@
 #include <iostream>
 #include <regex>
 #include <string>
+
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 static void loadFromInput(IniFile& targetIni) {
 	std::string targetFilePath;
@@ -68,9 +71,11 @@ static void loadAgain(IniFile& targetIni) {
 }
 
 int main(int argc, char* argv[]) {
-    try {
+	try {
+#ifdef _WIN32
 		SetConsoleOutputCP(CP_UTF8);
-		system("title INI Validator");
+		system("title INI Validator");  // useless in Linux zsh.
+#endif
 #ifndef _DEBUG
 		std::filesystem::path exe_path = std::filesystem::path(argv[0]).parent_path();
 		std::filesystem::current_path(exe_path);
@@ -85,7 +90,10 @@ int main(int argc, char* argv[]) {
 			loadFromArg(argc, argv, targetIni);
 		else
 			loadFromInput(targetIni);
+
+#ifdef _WIN32
 		SetConsoleCP(CP_UTF8);
+#endif
 
 		while (true) {
 			Checker checker(configIni, targetIni);

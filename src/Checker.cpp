@@ -5,7 +5,10 @@
 #include <iostream>
 #include <set>
 #include <sstream>
+
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 Checker* Checker::Instance = nullptr;
 std::atomic<size_t> Checker::ProcessedSections(0);

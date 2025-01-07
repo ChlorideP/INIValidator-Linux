@@ -53,6 +53,30 @@
         "reveal": "silent"
       },
       "problemMatcher": "$msCompile"
+    },
+    {
+      "type": "cppbuild",
+      "label": "C/C++: clang++ build active file",
+      "command": "/usr/bin/clang++",
+      "args": [
+        "-fcolor-diagnostics",
+        "-fansi-escape-codes",
+        "-g",
+        "${file}",
+        "-I${workspaceFolder}/src",
+        "-I/usr/include/python3.13",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}",
+        "-std=c++23",
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": [
+        "$gcc",
+      ],
+      "group": "build",
+      "detail": "compiler: /usr/bin/clang++"
     }
   ]
 }

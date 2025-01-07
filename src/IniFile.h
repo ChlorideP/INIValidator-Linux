@@ -56,7 +56,7 @@ public:
 
 	static std::string GetFileName(size_t index);
 	static size_t GetFileIndex();
-	static std::vector<std::string> FileNames;
+	static std::vector<std::string, std::allocator<std::string>> FileNames;
 	static size_t FileIndex;
 
 	IniFile();

@@ -145,10 +145,12 @@ namespace math {
 		case '-': return a - b;
 		case '*': return a * b;
 		case '/':
-			if (b != 0) return a / b; 
-			throw std::string("除零错误:" + std::to_string(a) + "/" + std::to_string(b));
+			if (b != 0) return a / b;
+			throw std::format("除零错误: {}/{}", a, b);
+			// throw std::string("除零错误:" + std::to_string(a) + "/" + std::to_string(b));
 		default:
-			throw std::string("异常操作符:" + op);
+			throw std::format("异常操作符: {}", op);
+			// throw std::string("异常操作符:" + op);
 		}
 	}
 }
