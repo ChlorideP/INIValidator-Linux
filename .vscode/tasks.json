@@ -62,12 +62,13 @@
         "-fcolor-diagnostics",
         "-fansi-escape-codes",
         "-g",
-        "${file}",
-        "-I${workspaceFolder}/src",
+        "${workspaceFolder}/**/*.cpp",
+        "-iquote${workspaceFolder}/src",
         "-I/usr/include/python3.13",
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}",
+        "build/ini-validator",
         "-std=c++23",
+        "-v"
       ],
       "options": {
         "cwd": "${fileDirname}"

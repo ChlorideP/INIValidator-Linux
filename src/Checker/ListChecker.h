@@ -4,6 +4,10 @@
 #include <string>
 #include <unordered_map>
 
+#ifndef _WIN32
+#include <climits>
+#endif
+
 // 用于value列表的值
 // [Lists]
 // Type = 列表的数据类型, 可填Sections、NumberLimits、Limits中的值

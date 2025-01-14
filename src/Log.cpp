@@ -4,6 +4,9 @@
 #include <queue>
 #include <sstream>
 #include <iomanip>
+#include <condition_variable>
+
+#include <pymacro.h>
 
 Log* Log::Instance = nullptr;
 std::set<LogStream> Log::Logs;
@@ -18,7 +21,7 @@ std::string Log::getSeverityLabel(Severity severity) {
 	case Severity::INFO:    return "\033[32m[建议]\033[0m";
 	case Severity::WARNING: return "\033[33m[非法]\033[0m";
 	case Severity::ERROR:   return "\033[31m[错误]\033[0m";
-	default: __assume(0);
+	default: Py_UNREACHABLE();
 	}
 }
 
@@ -28,7 +31,7 @@ std::string Log::getPlainSeverityLabel(Severity severity) {
 	case Severity::INFO:    return "[建议]";
 	case Severity::WARNING: return "[非法]";
 	case Severity::ERROR:   return "[错误]";
-	default: __assume(0);
+	default: Py_UNREACHABLE();
 	}
 }
 
@@ -38,7 +41,7 @@ std::string Log::getJsonSeverityLabel(Severity severity) {
 	case Severity::INFO:    return "建议";
 	case Severity::WARNING: return "非法";
 	case Severity::ERROR:   return "错误";
-	default: __assume(0);
+	default: Py_UNREACHABLE();
 	}
 }
 

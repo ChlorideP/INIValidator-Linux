@@ -5,6 +5,10 @@
 #include <unordered_map>
 #include <vector>
 
+#ifndef _WIN32
+#include <climits>
+#endif
+
 // 用于对字符串类型的特殊判定
 // [Limits]
 // StartWith = 前缀的限定内容, 不填则不检查

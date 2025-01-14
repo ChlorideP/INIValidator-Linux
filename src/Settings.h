@@ -3,7 +3,7 @@
 #include <string>
 
 class Settings {
-	using Keywords = std::vector<std::string>;
+	using Keywords = std::vector<std::string, std::allocator<std::string>>;
 public:
 
 	static Settings* Instance;
