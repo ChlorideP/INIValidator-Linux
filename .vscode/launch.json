@@ -2,28 +2,29 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug",
-      "type": "cppvsdbg",
+      "name": "(gdb) Launch",
+      "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/x64/Debug/INIValidator.exe",
+      "program": "${workspaceFolder}/build/inivalidator",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "${workspaceFolder}/x64/Debug/",
+      "cwd": "${workspaceFolder}/build",
+      "preLaunchTask": "C/C++: clang++ build active file",
       "environment": [],
-      "console": "externalTerminal",
-      "preLaunchTask": "Debug"
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+          {
+              "description": "Enable pretty-printing for gdb",
+              "text": "-enable-pretty-printing",
+              "ignoreFailures": true
+          },
+          {
+              "description": "Set Disassembly Flavor to Intel",
+              "text": "-gdb-set disassembly-flavor intel",
+              "ignoreFailures": true
+          }
+      ]
     },
-    {
-      "name": "Release",
-      "type": "cppvsdbg",
-      "request": "launch",
-      "program": "${workspaceFolder}/x64/Release/INIValidator.exe",
-      "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}/x64/Debug/",
-      "environment": [],
-      "console": "externalTerminal",
-      "preLaunchTask": "Release"
-    }
   ]
 }

@@ -3,7 +3,7 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/src",
                 "/usr/include/python3.13/**"
             ],
             "defines": [
@@ -13,7 +13,10 @@
             "compilerPath": "/usr/bin/clang++",
             "intelliSenseMode": "linux-clang-x64",
             "cStandard": "c23",
-            "cppStandard": "c++23"
+            "cppStandard": "c++23",
+            "compilerArgs": [
+                "-lpython3.13"
+            ]
         }
     ],
     "version": 4

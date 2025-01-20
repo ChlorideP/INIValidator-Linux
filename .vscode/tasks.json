@@ -1,59 +1,6 @@
 {
   "version": "2.0.0",
-  "windows": {
-    "options": {
-      "shell": {
-        "executable": "cmd.exe",
-        "args": [
-          "/C",
-          "\"${workspaceFolder}/.vscode/env.bat\"",
-          "&&"
-        ]
-      }
-    }
-  },
   "tasks": [
-    {
-      "label": "Debug",
-      "type": "shell",
-      "command": "msbuild",
-      "args": [
-        "INIValidator.sln",
-        "/property:Configuration=Debug",
-        "/property:GenerateFullPaths=true",
-        "/t:build",
-        "/consoleloggerparameters:NoSummary",
-        "/v:m"
-      ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "presentation": {
-        "reveal": "silent"
-      },
-      "problemMatcher": "$msCompile"
-    },
-    {
-      "label": "Release",
-      "type": "shell",
-      "command": "msbuild",
-      "args": [
-        "INIValidator.sln",
-        "/property:Configuration=Release",
-        "/property:GenerateFullPaths=true",
-        "/t:build",
-        "/consoleloggerparameters:NoSummary",
-        "/v:m"
-      ],
-      "group": {
-        "kind": "build"
-      },
-      "presentation": {
-        "reveal": "silent"
-      },
-      "problemMatcher": "$msCompile"
-    },
     {
       "type": "cppbuild",
       "label": "C/C++: clang++ build active file",
@@ -62,13 +9,28 @@
         "-fcolor-diagnostics",
         "-fansi-escape-codes",
         "-g",
-        "${workspaceFolder}/**/*.cpp",
+        "${workspaceFolder}/INIValidator.cpp",
         "-iquote${workspaceFolder}/src",
+        // have to force include as msvc manages very messy
+        "-includeChecker.cpp",
+        "-includeIniFile.cpp",
+        "-includeLog.cpp",
+        "-includeSettings.cpp",
+        "-includeDict.cpp",
+        "-includeProgressBar.cpp",
+        "-includeChecker/CustomChecker.cpp",
+        "-includeChecker/LimitChecker.cpp",
+        "-includeChecker/ListChecker.cpp",
+        "-includeChecker/NumberChecker.cpp",
+        "-includeChecker/RegistryChecker.cpp",
+        "-includeChecker/TypeChecker.cpp",
         "-I/usr/include/python3.13",
+        "-lpython3.13",
         "-o",
-        "build/ini-validator",
+        "${workspaceFolder}/build/inivalidator",
         "-std=c++23",
-        "-v"
+        "-D_CONSOLE",
+        "-O0"
       ],
       "options": {
         "cwd": "${fileDirname}"
